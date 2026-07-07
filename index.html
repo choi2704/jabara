@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>강동자바라 자바라 견적계산기</title>
-<link rel="stylesheet" href="jabara-v1.css?v=1">
+<link rel="stylesheet" href="jabara-v3.css?v=3">
 </head>
 <body>
 <header class="topbar">
@@ -19,7 +19,7 @@
   <section class="hero">
     <div class="badge">KANGDONG JABARA ESTIMATE</div>
     <h1>스텐 자바라 대문<br><span>견적계산기</span></h1>
-    <p>길이, 높이, 재질, 바퀴 종류를 선택하면 예상 견적을 바로 확인할 수 있습니다.</p>
+    <p>일반형·고급형 자바라와 하우스 옵션까지 한 번에 예상 견적을 확인할 수 있습니다.</p>
     <div class="heroBtns">
       <a href="#calculator">견적 바로 계산하기</a>
       <a class="dark" href="https://talk.naver.com/ct/w4a85f?frm=psf" target="_blank">톡톡 문의하기</a>
@@ -27,15 +27,21 @@
   </section>
 
   <section class="features">
-    <div><b>길이 직접 입력</b><span>mm 입력 시 m 자동 변환</span></div>
-    <div><b>재질 선택</b><span>SUS201 / SUS304</span></div>
-    <div><b>높이 선택</b><span>H1200 / H1500</span></div>
+    <div><b>제품형 선택</b><span>일반형 / 고급형</span></div>
+    <div><b>길이 입력</b><span>mm 입력 시 m 자동 변환</span></div>
     <div><b>바퀴 선택</b><span>100파이는 m당 추가금</span></div>
+    <div><b>하우스 옵션</b><span>필요 시 1회 추가</span></div>
   </section>
 
   <section class="calculator" id="calculator">
     <div class="card">
-      <div class="sectionTitle"><em>1</em><h2>제작 사양 입력</h2></div>
+      <div class="sectionTitle"><em>1</em><h2>자바라 사양 입력</h2></div>
+
+      <label>제품 종류</label>
+      <div class="optionGrid two" id="typeOptions"></div>
+
+      <label>개폐 방식</label>
+      <div class="optionGrid two" id="openOptions"></div>
 
       <label>재질</label>
       <div class="optionGrid two" id="materialOptions"></div>
@@ -46,7 +52,7 @@
       <label>바퀴 종류</label>
       <div class="optionGrid three" id="wheelOptions"></div>
 
-      <label>자바라 총 길이(mm)</label>
+      <label>자바라 총 길이(mm) <span style="font-size:13px;color:#d70000;">※ 최소 3000mm 이상</span></label>
       <input id="length" class="textInput" type="number" placeholder="예: 3500" min="1" step="1">
 
       <div class="meterBox">
@@ -62,26 +68,40 @@
         <span>대</span>
       </div>
 
+      <div class="houseCheck">
+        <label class="checkLabel"><input id="houseUse" type="checkbox"> 하우스 옵션 추가</label>
+        <p>하우스는 자바라 금액에 1회 추가되는 별도 옵션입니다.</p>
+      </div>
+
+      <div class="housePanel" id="housePanel">
+        <label>하우스 높이</label>
+        <div class="optionGrid two" id="houseHeightOptions"></div>
+
+        <label>하우스 재질</label>
+        <div class="optionGrid two" id="houseMaterialOptions"></div>
+
+        <label>하우스 깊이 구간</label>
+        <div class="optionGrid depth" id="houseDepthOptions"></div>
+      </div>
+
       <div class="info blue">
         <b>계산 기준</b>
-        <p>기본 단가는 1m 기준입니다. 100파이 우레탄 바퀴는 1m당 5,000원이 추가됩니다.</p>
+        <p>자바라는 1m 기준 단가로 계산됩니다. 최소 주문 길이는 3000mm입니다. 100파이 우레탄 바퀴는 1m당 5,000원이 추가됩니다.</p>
       </div>
 
       <button class="tableBtn" type="button" id="toggleTable">단가표 보기</button>
       <div class="tables" id="tables">
-        <table>
-          <tr><th>재질</th><th>높이</th><th>1m 기본단가</th></tr>
-          <tr><td>SUS201</td><td>H1200</td><td>80,000원</td></tr>
-          <tr><td>SUS201</td><td>H1500</td><td>100,000원</td></tr>
-          <tr><td>SUS304</td><td>H1200</td><td>120,000원</td></tr>
-          <tr><td>SUS304</td><td>H1500</td><td>140,000원</td></tr>
-        </table>
+        <h3>자바라 단가표</h3>
+        <table id="jabaraTable"></table>
+        <h3>바퀴 추가금</h3>
         <table>
           <tr><th>바퀴</th><th>추가금</th></tr>
           <tr><td>앵글바퀴</td><td>추가금 없음</td></tr>
           <tr><td>60파이 우레탄</td><td>추가금 없음</td></tr>
           <tr><td>100파이 우레탄</td><td>1m당 +5,000원</td></tr>
         </table>
+        <h3>하우스 단가표</h3>
+        <table id="houseTable"></table>
       </div>
     </div>
 
@@ -95,13 +115,16 @@
       </div>
 
       <dl class="summary">
+        <div><dt>제품 종류</dt><dd id="typeText">일반형</dd></div>
+        <div><dt>개폐 방식</dt><dd id="openText">편개형</dd></div>
         <div><dt>재질</dt><dd id="materialText">SUS201</dd></div>
         <div><dt>높이</dt><dd id="heightText">H1200</dd></div>
         <div><dt>바퀴</dt><dd id="wheelText">앵글바퀴</dd></div>
         <div><dt>입력 길이</dt><dd id="lengthText">길이를 입력해주세요</dd></div>
-        <div><dt>1m 기본단가</dt><dd id="baseRateText">80,000원</dd></div>
-        <div><dt>바퀴 추가단가</dt><dd id="wheelRateText">0원/m</dd></div>
-        <div><dt>적용 1m 단가</dt><dd id="meterRateText">80,000원</dd></div>
+        <div><dt>적용 1m 단가</dt><dd id="meterRateText">0원</dd></div>
+        <div><dt>자바라 금액</dt><dd id="jabaraTotalText">0원</dd></div>
+        <div><dt>하우스 옵션</dt><dd id="houseText">선택 안 함</dd></div>
+        <div><dt>하우스 금액</dt><dd id="housePriceText">0원</dd></div>
         <div><dt>수량</dt><dd id="qtyText">1대</dd></div>
       </dl>
 
@@ -125,7 +148,7 @@
   <span>스테인리스 자바라 대문 맞춤 제작</span>
 </footer>
 
-<script src="jabara-prices-v1.js?v=1"></script>
-<script src="jabara-v1.js?v=1"></script>
+<script src="jabara-prices-v3.js?v=3"></script>
+<script src="jabara-v3.js?v=3"></script>
 </body>
 </html>
