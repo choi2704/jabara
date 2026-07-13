@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>강동자바라 자바라 견적계산기</title>
-<link rel="stylesheet" href="jabara-v3.css?v=3">
+<link rel="stylesheet" href="jabara-v3.css?v=4">
 </head>
 <body>
 <header class="topbar">
@@ -60,6 +60,15 @@
         <b id="meterText">0.00m</b>
       </div>
 
+      <div class="splitBox" id="splitBox">
+        <b>양개형 자동 분할</b>
+        <div>
+          <span>좌측 <strong id="leftLengthText">0mm</strong></span>
+          <span>우측 <strong id="rightLengthText">0mm</strong></span>
+        </div>
+        <p>양개형은 총 길이를 좌·우 두 제품으로 자동 분할합니다.</p>
+      </div>
+
       <label>수량</label>
       <div class="qtyRow">
         <button type="button" id="minus">-</button>
@@ -70,7 +79,7 @@
 
       <div class="houseCheck">
         <label class="checkLabel"><input id="houseUse" type="checkbox"> 하우스 옵션 추가</label>
-        <p>하우스는 자바라 금액에 1회 추가되는 별도 옵션입니다.</p>
+        <p id="houseHelpText">편개형은 1개, 양개형은 2개가 자동 적용됩니다.</p>
       </div>
 
       <div class="housePanel" id="housePanel">
@@ -121,9 +130,11 @@
         <div><dt>높이</dt><dd id="heightText">H1200</dd></div>
         <div><dt>바퀴</dt><dd id="wheelText">앵글바퀴</dd></div>
         <div><dt>입력 길이</dt><dd id="lengthText">길이를 입력해주세요</dd></div>
+        <div id="splitSummaryRow"><dt>양개형 자동 분할</dt><dd id="splitSummaryText">-</dd></div>
         <div><dt>적용 1m 단가</dt><dd id="meterRateText">0원</dd></div>
         <div><dt>자바라 금액</dt><dd id="jabaraTotalText">0원</dd></div>
         <div><dt>하우스 옵션</dt><dd id="houseText">선택 안 함</dd></div>
+        <div><dt>하우스 수량</dt><dd id="houseQtyText">0개</dd></div>
         <div><dt>하우스 금액</dt><dd id="housePriceText">0원</dd></div>
         <div><dt>수량</dt><dd id="qtyText">1대</dd></div>
       </dl>
@@ -136,6 +147,7 @@
         <button type="button" id="copy">견적내용 복사하기</button>
         <a class="talk" href="https://talk.naver.com/ct/w4a85f?frm=psf" target="_blank">네이버 톡톡 문의하기</a>
         <a class="phone" href="tel:01075950484">전화문의 010-7595-0484</a>
+        <a class="order" id="order" href="https://kdjavara.kr/product/list.html?cate_no=29" target="_blank">계산한 사양으로 주문하러 가기</a>
       </div>
 
       <p class="notice">※ 본 계산기는 예상 견적용입니다. 현장 조건, 레일, 경사, 배송·시공 여부에 따라 최종 견적은 달라질 수 있습니다.</p>
@@ -148,7 +160,7 @@
   <span>스테인리스 자바라 대문 맞춤 제작</span>
 </footer>
 
-<script src="jabara-prices-v3.js?v=3"></script>
-<script src="jabara-v3.js?v=3"></script>
+<script src="jabara-prices-v3.js?v=4"></script>
+<script src="jabara-v3.js?v=4"></script>
 </body>
 </html>
