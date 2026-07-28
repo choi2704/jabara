@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>강동자바라 접힘사이즈 계산기</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,'Malgun Gothic',sans-serif;background:#f2f6fb;color:#111827}.wrap{width:min(720px,100%);margin:auto;padding:28px 18px}.card{background:#fff;border:1px solid #e5edf6;border-radius:28px;padding:28px;box-shadow:0 24px 70px rgba(18,38,63,.12)}.brand{font-size:16px;font-weight:1000;color:#0a66c2}.title{margin:10px 0 6px;font-size:34px;letter-spacing:-1.5px}.desc{margin:0 0 24px;color:#64748b;line-height:1.6}label{display:block;margin:18px 0 9px;font-weight:1000}.heightBtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}.heightBtns button{padding:16px;border:1px solid #d8e1ec;border-radius:16px;background:#fff;font-size:18px;font-weight:1000;cursor:pointer}.heightBtns button.active{border-color:#0a66c2;color:#0a66c2;box-shadow:0 0 0 3px rgba(10,102,194,.12)}input{width:100%;height:58px;border:1px solid #d8e1ec;border-radius:16px;padding:0 16px;font-size:22px;outline:none}.formula{margin-top:12px;padding:14px 16px;background:#eff6ff;border-radius:16px;color:#475569;line-height:1.55}.result{margin-top:20px;padding:26px 18px;border-radius:22px;text-align:center;background:linear-gradient(180deg,#fff7ed,#ffedd5)}.result span{display:block;color:#9a3412;font-weight:900}.result strong{display:block;margin:8px 0;font-size:58px;color:#d70000;letter-spacing:-2px}.result small{color:#7c2d12}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.actions button{padding:15px;border:0;border-radius:15px;font-size:17px;font-weight:1000;cursor:pointer}.copy{background:#0a66c2;color:#fff}.close{background:#111827;color:#fff}@media(max-width:520px){.card{padding:22px}.title{font-size:29px}.result strong{font-size:48px}.actions{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="card">
+    <div class="brand">강동자바라</div>
+    <h1 class="title">자바라 접힘사이즈 계산기</h1>
+    <p class="desc">주문길이와 높이를 입력하면 접었을 때 필요한 공간을 50mm 단위로 계산합니다.</p>
+
+    <label>자바라 높이</label>
+    <div class="heightBtns">
+      <button type="button" data-height="1200" class="active">높이 1200</button>
+      <button type="button" data-height="1500">높이 1500</button>
+    </div>
+
+    <label for="length">주문길이(mm)</label>
+    <input id="length" type="number" min="1" inputmode="numeric" placeholder="예: 5000">
+
+    <div class="formula" id="formula">높이 1200 계산식: 주문길이 ÷ 420 × 52 + 여유분 100mm</div>
+
+    <div class="result">
+      <span>접었을 때 필요한 공간</span>
+      <strong id="result">0mm</strong>
+      <small id="detail">주문길이를 입력해주세요.</small>
+    </div>
+
+    <div class="actions">
+      <button class="copy" type="button" id="copy">계산결과 복사</button>
+      <button class="close" type="button" onclick="window.close()">창 닫기</button>
+    </div>
+  </section>
+</main>
+<script>
+let height=1200;
+const lengthEl=document.getElementById('length');
+const resultEl=document.getElementById('result');
+const detailEl=document.getElementById('detail');
+const formulaEl=document.getElementById('formula');
+function strictCeil50(value){return (Math.floor(value/50)+1)*50;}
+function calculate(){
+  const length=Number(lengthEl.value)||0;
+  const divisor=height===1200?420:450;
+  formulaEl.textContent=`높이 ${height} 계산식: 주문길이 ÷ ${divisor} × 52 + 여유분 100mm`;
+  if(length<=0){resultEl.textContent='0mm';detailEl.textContent='주문길이를 입력해주세요.';return;}
+  const raw=length/divisor*52+100;
+  const rounded=strictCeil50(raw);
+  resultEl.textContent=rounded.toLocaleString()+'mm';
+  detailEl.textContent=`계산값 ${raw.toFixed(1)}mm → 50mm 단위 올림 적용`;
+}
+document.querySelectorAll('[data-height]').forEach(btn=>btn.addEventListener('click',()=>{
+  height=Number(btn.dataset.height);
+  document.querySelectorAll('[data-height]').forEach(b=>b.classList.toggle('active',b===btn));
+  calculate();
+}));
+lengthEl.addEventListener('input',calculate);
+document.getElementById('copy').addEventListener('click',async()=>{
+  const length=Number(lengthEl.value)||0;
+  if(!length){alert('주문길이를 입력해주세요.');return;}
+  const text=`[자바라 접힘사이즈]\n높이: ${height}mm\n주문길이: ${length.toLocaleString()}mm\n접힘공간: ${resultEl.textContent}`;
+  try{await navigator.clipboard.writeText(text);alert('계산결과를 복사했습니다.');}
+  catch(e){alert(text);}
+});
+calculate();
+</script>
+</body>
+</html>
