@@ -10,3 +10,9 @@
 #splitSummaryRow.show{display:flex}
 .actions .order{background:#f97316;color:#fff}
 @media(max-width:560px){.splitBox>div{grid-template-columns:1fr}}
+
+/* 상세페이지 임베드용: 하단 여백 최소화 */
+.wrap{padding-bottom:12px}
+.calculator{margin-bottom:0}
+.resultCard{padding-bottom:18px}
+body{padding-bottom:0}
