@@ -16,3 +16,13 @@
 .calculator{margin-bottom:0}
 .resultCard{padding-bottom:18px}
 body{padding-bottom:0}
+
+/* 2026-10 상세페이지용 컴팩트 레이아웃 */
+.topbar{height:46px;padding-left:max(12px,calc((100vw - 1040px)/2));padding-right:max(12px,calc((100vw - 1040px)/2))}
+.brand{font-size:20px}.topLinks a{padding:6px 10px;font-size:12px}.wrap{width:min(1040px,100%);padding:0 10px 8px}
+.hero{padding:16px 0 12px}.badge{padding:5px 9px;font-size:10px}.hero h1{margin:8px 0 6px;font-size:34px;line-height:1.02;letter-spacing:-1.5px}.hero p{font-size:13px;line-height:1.4}.heroBtns{display:none}.features{display:none}
+.calculator{grid-template-columns:1.08fr .92fr;gap:12px}.card{padding:15px;border-radius:18px;box-shadow:0 10px 28px rgba(18,38,63,.08)}.sectionTitle{gap:8px;margin-bottom:10px}.sectionTitle em{width:27px;height:27px;font-size:13px}.sectionTitle h2{font-size:18px}
+label{margin:10px 0 5px;font-size:13px}.optionGrid{gap:6px}.optBtn{border-radius:10px;padding:9px 5px;font-size:12px}.optionGrid.three .optBtn,.optionGrid.depth .optBtn{font-size:11px}.textInput,.qtyRow input{height:39px;border-radius:10px;padding:0 10px;font-size:15px}.meterBox{margin-top:6px;padding:8px 10px;border-radius:10px;font-size:12px}.meterBox b{font-size:15px}.splitBox{margin-top:6px;padding:9px;border-radius:11px}.splitBox>b{margin-bottom:5px;font-size:12px}.splitBox>div{gap:5px}.splitBox>div span{padding:6px;border-radius:8px;font-size:11px}.splitBox strong{margin-top:2px;font-size:14px}.splitBox p{margin:5px 0 0;font-size:10px}.qtyRow{gap:5px}.qtyRow button{width:38px;height:38px;border-radius:10px;font-size:19px}.qtyRow input{max-width:72px}.qtyRow span{font-size:12px}.houseCheck{margin-top:10px;border-radius:11px;padding:9px}.checkLabel{font-size:13px}.checkLabel input{width:16px;height:16px}.houseCheck p{margin:4px 0 0;font-size:10px}.housePanel{margin-top:6px;padding:9px;border-radius:11px}.info{margin-top:8px;padding:9px;border-radius:11px;font-size:11px;line-height:1.4}.tableBtn{margin-top:8px;padding:9px;border-radius:10px;font-size:12px}
+.totalBox{padding:15px 10px;border-radius:14px}.totalBox span{font-size:12px}.totalBox strong{margin:3px 0;font-size:38px;letter-spacing:-1px}.totalBox small{font-size:10px}.summary{margin:9px 0;padding:5px 10px;border-radius:11px}.summary div{gap:8px;padding:6px 0;font-size:11px}.guideBox{border-radius:11px;padding:8px;margin-bottom:0}.guideBox p{font-size:10px;line-height:1.35}.resultCard{padding-bottom:15px}
+@media(max-width:980px){.calculator{grid-template-columns:1fr 1fr}.optionGrid.three{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.calculator{grid-template-columns:1fr}.hero h1{font-size:28px}.topbar{position:static}.topLinks{display:none}.optionGrid.three{grid-template-columns:repeat(3,1fr)}}
